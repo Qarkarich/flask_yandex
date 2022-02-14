@@ -1,0 +1,26 @@
+.form-container {
+    width: auto;
+    height: auto;
+    max-width: 500px;
+    padding: 2%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3vh;
+    border: 1px solid black;
+    border-radius: 2%;
+    background-color: rgb(250, 213, 176)
+}
+
+
+.form-container h1, h3 {
+    text-align: center;
+}
+
+.form-container button {
+    margin: 5% 0 5% 0;
+}
+
+.output_image {
+    max-width: 98%;
+    height: auto;
+}
