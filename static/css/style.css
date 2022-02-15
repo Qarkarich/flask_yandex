@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+.header-text {
+    padding: 15px;
+}
+
+.header-logo {
+    font-weight: bold;
+}
+
+.catchphrase {
+    margin: 15px;
+}
