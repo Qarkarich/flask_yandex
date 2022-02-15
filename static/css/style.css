@@ -15,3 +15,13 @@ body {
 .catchphrase {
     margin: 15px;
 }
+
+.prof-heading {
+    text-align: center;
+    font-weight: bolder;
+}
+
+#prof_display {
+    text-align: center;
+    width: 100%;
+}
