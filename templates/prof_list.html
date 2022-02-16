@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="prof_list">
+        <h2>Список профессий</h2>
+        <{{ list_type }}>
+            {% for prof in prof_list %}
+                    <li>{{prof}}</li>
+            {% endfor %}
+        </{{list_type}}>
+    </div>
+{% endblock %}

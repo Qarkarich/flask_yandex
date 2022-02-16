@@ -4,6 +4,11 @@ body {
     font-family: sans-serif;
 }
 
+h2 {
+    text-align: center;
+    font-weight: bolder;
+}
+
 .header-text {
     padding: 15px;
 }
@@ -14,11 +19,6 @@ body {
 
 .catchphrase {
     margin: 15px;
-}
-
-.prof-heading {
-    text-align: center;
-    font-weight: bolder;
 }
 
 #prof_display {
