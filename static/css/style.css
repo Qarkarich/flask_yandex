@@ -9,6 +9,10 @@ h2 {
     font-weight: bolder;
 }
 
+h4 {
+    padding-left: 20px;
+}
+
 .header-text {
     padding: 15px;
 }

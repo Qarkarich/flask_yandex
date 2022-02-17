@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="data_display">
+        <ul class="list-group">
+            {% for param in data[1:] %}
+                <li class="list-group-item"><h4>{{ param['data']['display_data'] }}: {{ param['data']['value'] }}</h4></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}

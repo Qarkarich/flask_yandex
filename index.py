@@ -30,5 +30,53 @@ def prof_list(list):
     return render_template('error.html')
 
 
+@app.route('/answer')
+@app.route('/auto_answer')
+def show_answer():
+    values = [
+        {'id': 'title',
+         'data': {
+             'display_data': ' ',
+             'value': ''
+         }},
+        {'id': 'surname',
+         'data': {
+             'display_data': 'Фамилия',
+             'value': 'Watny'
+         }},
+        {'id': 'name',
+         'data': {
+             'display_data': 'Имя',
+             'value': 'Mark'
+         }},
+        {'id': 'education',
+         'data': {
+             'display_data': 'Образование',
+             'value': 'Выше среднего'
+         }},
+        {'id': 'profession',
+         'data': {
+             'display_data': 'Профессия',
+             'value': 'штурман марсохода'
+         }},
+        {'id': 'sex',
+         'data': {
+             'display_data': 'Пол',
+             'value': 'male'
+         }},
+        {'id': 'motivation',
+         'data': {
+             'display_data': 'Мотивация',
+             'value': 'Всегда мечтал застрять на Марсе!'
+         }},
+        {'id': 'ready',
+         'data': {
+             'display_data': 'Готовы остаться на Марсе?',
+             'value': True
+         }}]
+
+    return render_template('auto_answer.html', data=values)
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
