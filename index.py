@@ -95,5 +95,23 @@ def show_cabins():
     return render_template('cabins.html', names=members)
 
 
+@app.route('/table/<sex>/<age>')
+def show_table(sex, age):
+    if int(age) >= 21:
+        img = url_for('static', filename='img/adult.jpg')
+        if sex == 'male':
+            color = '#342d71'
+        elif sex == 'female':
+            color = '#ff9478'
+    elif int(age) < 21:
+        img = url_for('static', filename='img/child.png')
+        if sex == 'male':
+            color = '#2d55ff'
+        elif sex == 'female':
+            color = '#ff4c30'
+
+    return render_template('table.html', img=img, wall_color=color)
+
+
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
