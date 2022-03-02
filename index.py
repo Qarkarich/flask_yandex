@@ -85,7 +85,14 @@ def login_form():
     form = LoginForm()
     if form.validate_on_submit():
         return redirect('/success')
-    return render_template('login.html', form=form, logo_path=url_for('static', filename='img/MARS-2-7.png'))
+    return render_template('login.html', form=form,
+                           logo_path=url_for('static', filename='img/MARS-2-7.png'))
+
+
+@app.route('/distribution')
+def show_cabins():
+    members = ['Ридли Скотт', 'Энди Уир', 'Марк Уотни', 'Венката Капур', 'Тедди Сандерс', 'Шон Бин']
+    return render_template('cabins.html', names=members)
 
 
 if __name__ == '__main__':
