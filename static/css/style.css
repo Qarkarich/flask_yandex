@@ -15,3 +15,13 @@ body {
 .catchphrase {
     margin: 15px;
 }
+
+table {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+h2 {
+    text-align: center;
+}
