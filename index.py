@@ -1,5 +1,6 @@
-from flask import Flask, render_template, url_for, redirect
+from flask import Flask, render_template, url_for, redirect, request
 from loginform import LoginForm
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'marsirovka'
@@ -111,6 +112,22 @@ def show_table(sex, age):
             color = '#ff4c30'
 
     return render_template('table.html', img=img, wall_color=color)
+
+
+@app.route('/galery', methods=['POST', 'GET'])
+def show_galery():
+    if request.method == 'GET':
+        return render_template('galery.html',
+                               images=os.listdir(os.path.join('static', 'img/galery_slides')),
+                               img_path=os.path.join('static', 'img/galery_slides'))
+    elif request.method == 'POST':
+        f = request.files['file']
+        filename = f"img{len(os.listdir(os.path.join('static', 'img/galery_slides'))) + 1}.{f.filename.split('.')[-1]}"
+        f.save(f'static/img/galery_slides/{filename}')
+
+        return render_template('galery.html',
+                               images=os.listdir(os.path.join('static', 'img/galery_slides')),
+                               img_path=os.path.join('static', 'img/galery_slides'))
 
 
 if __name__ == '__main__':

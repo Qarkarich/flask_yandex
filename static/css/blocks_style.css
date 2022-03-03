@@ -1,0 +1,12 @@
+#prof_display {
+    text-align: center;
+    width: 100%;
+}
+
+#login-form {
+    width: 70vw;
+    padding: 3%;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}

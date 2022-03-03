@@ -1,0 +1,21 @@
+#galery-wrapper {
+    width: 40%;
+    height: auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid rgb(182, 182, 182);
+}
+
+.carousel-item img {
+    height: 50vh;
+}
+
+.form-container {
+    padding: 15px;
+    text-align: center;
+}
+
+.form-container .form-group {
+    margin: 5px;
+}
