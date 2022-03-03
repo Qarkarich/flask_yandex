@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% set member = crew|random %}
+    <div class="member">
+        <h2>{{ member['name'] }}</h2>
+        <img src="{{ img_path }}/{{ member['img'] }}" alt="{{ member['name'] }}">
+        <p>{{ member['prof']|join(', ') }}</p>
+    </div>
+{% endblock %}

@@ -1,6 +1,9 @@
+import pprint
+
 from flask import Flask, render_template, url_for, redirect, request
 from loginform import LoginForm
 import os
+import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'marsirovka'
@@ -128,6 +131,16 @@ def show_galery():
         return render_template('galery.html',
                                images=os.listdir(os.path.join('static', 'img/galery_slides')),
                                img_path=os.path.join('static', 'img/galery_slides'))
+
+
+@app.route('/member')
+def random_member():
+    with open(os.path.join('templates', 'members.json')) as members_file:
+        data = json.load(members_file)['members']
+
+    icon_path = os.path.join('static', 'img/member_img')
+
+    return render_template('random_member.html', crew=data, img_path=icon_path)
 
 
 if __name__ == '__main__':
