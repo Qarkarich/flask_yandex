@@ -1,0 +1,7 @@
+#register-form, #login-form {
+    max-width: 50%;
+    text-emphasis: center;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}

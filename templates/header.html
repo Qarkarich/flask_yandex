@@ -1,0 +1,11 @@
+<header id="top-heading">
+    <div class="header-items">
+        <h1 class="header-logo">Миссия колонизации Марса</h1>
+        <ul class="menu-items">
+            {% if current_user.is_authenticated %}
+                <li><h3>{{ current_user.name }}</h3></li>
+            {% endif %}
+            <li><h3>Mars One</h3></li>
+        </ul>
+    </div>
+</header>
