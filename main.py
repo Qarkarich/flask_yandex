@@ -7,7 +7,7 @@ from data.users import User
 from data.jobs import Jobs
 from forms.user import RegisterForm, LoginForm
 from forms.job import AddJobForm
-from flask_login import login_user, LoginManager
+from flask_login import login_user, LoginManager, logout_user
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -64,6 +64,13 @@ def login():
     return render_template('login.html', title='Авторизация', form=form)
 
 
+@app.route('/logout')
+@flask_login.login_required
+def logout():
+    logout_user()
+    return redirect("/")
+
+
 @app.route('/addjob', methods=['GET', 'POST'])
 def add_job():
     form = AddJobForm()
@@ -76,9 +83,12 @@ def add_job():
         job_endtime = datetime.datetime.now()
         if not form.is_finished.data:
             job_endtime += datetime.timedelta(hours=form.work_size.data)
+        job_id = 1
+        if db_sess.query(Jobs).order_by(Jobs.id.desc()).first():
+            job_id = db_sess.query(Jobs).order_by(Jobs.id.desc()).first().id + 1
 
         job = Jobs(
-            id=db_sess.query(Jobs).order_by(Jobs.id.desc()).first().id + 1,
+            id=job_id,
             team_leader=form.team_leader_id.data,
             job=form.job.data,
             work_size=form.work_size.data,
@@ -93,6 +103,7 @@ def add_job():
 
     return render_template('addjob.html', form=form, title="Adding a job")
 
+
 @app.route('/')
 def show_jobs_table():
     db_sess = db_sessions.create_session()
@@ -100,7 +111,10 @@ def show_jobs_table():
 
     for job in data:
         user = db_sess.query(User).filter(User.id == job.team_leader).first()
-        job.team_leader = f"{user.surname} {user.name}"
+        if user:
+            job.team_leader = f"{user.surname} {user.name}"
+        else:
+            job.team_leader = "Unknown"
 
     return render_template('job_table.html',
                            jobs=data)

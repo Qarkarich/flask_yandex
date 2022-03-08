@@ -3,7 +3,10 @@
         <h1 class="header-logo">Миссия колонизации Марса</h1>
         <ul class="menu-items">
             {% if current_user.is_authenticated %}
-                <li><h3>{{ current_user.name }}</h3></li>
+                <li><h3><a href="/logout">{{ current_user.name }}</a></h3></li>
+            {% else %}
+                <li><a class="btn btn-primary" href="/register">Register</a></li>
+                <li><a class="btn btn-success" href="/login">Login</a></li>
             {% endif %}
             <li><h3>Mars One</h3></li>
         </ul>

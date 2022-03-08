@@ -3,6 +3,11 @@ body {
     font-family: sans-serif;
 }
 
+a {
+    color: #000;
+    text-decoration: none;
+}
+
 .header-text {
     padding: 15px;
 }
@@ -25,18 +30,13 @@ body {
     margin: 0;
 }
 
+.center-heading {
+    text-align: center;
+}
+
 .menu-items li {
     display: inline-block;
     margin-left: 2vw;
-
-table {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-h2 {
-    text-align: center;
 }
 
 .content-wrapper, .header-items {

@@ -1,29 +1,30 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Works Log</h2>
+<h2 class="center-heading">Works Log</h2>
 {% for job in jobs %}
-        <h3>Action #{{ loop.index }}</h3>
-        <table class="table w-75">
-            <thead>
-            <tr class="table-secondary">
-                <td scope="col" style="width: 20%;">Title of activity</td>
-                <td scope="col" style="width: 20%;">Team Leader</td>
-                <td scope="col" style="width: 20%;">Duration</td>
-                <td scope="col" style="width: 20%;">List of collaborators</td>
-                <td scope="col" style="width: 20%;">Is finished</td>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="table-primary">
-                <td>{{ job.job }}</td>
-                <td>{{ job.team_leader }}</td>
-                <td>{{ job.work_size }} hours</td>
-                <td>{{ job.collaborators }}</td>
-                <td>{{ job.is_finished }}</td>
-            </tr>
-            </tbody>
-        </table>
+<div class="job-container">
+    <h3>Action #{{ loop.index }}</h3>
+    <table class="table">
+        <thead>
+        <tr class="table-secondary">
+            <td scope="col" style="width: 20%;">Title of activity</td>
+            <td scope="col" style="width: 20%;">Team Leader</td>
+            <td scope="col" style="width: 20%;">Duration</td>
+            <td scope="col" style="width: 20%;">List of collaborators</td>
+            <td scope="col" style="width: 20%;">Is finished</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="table-primary">
+            <td>{{ job.job }}</td>
+            <td>{{ job.team_leader }}</td>
+            <td>{{ job.work_size }} hours</td>
+            <td>{{ job.collaborators }}</td>
+            <td>{{ job.is_finished }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 {% endfor %}
-
 {% endblock %}

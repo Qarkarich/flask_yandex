@@ -5,3 +5,14 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+.job-container {
+    width: 75vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.job-container table td {
+    padding: 15px 10px 15px 10px;
+}
