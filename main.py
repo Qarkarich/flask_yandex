@@ -1,7 +1,6 @@
 import datetime
-
 import flask_login
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request, abort
 from data import db_sessions
 from data.users import User
 from data.jobs import Jobs
@@ -77,7 +76,7 @@ def add_job():
     if form.validate_on_submit():
         db_sess = db_sessions.create_session()
         if db_sess.query(Jobs).filter(Jobs.job == form.job.data).first():
-            return render_template("addjob.html", message="Job already exists", form=form,
+            return render_template("job.html", message="Job already exists", form=form,
                                    title="Adding a job")
 
         job_endtime = datetime.datetime.now()
@@ -101,7 +100,43 @@ def add_job():
         db_sess.commit()
         return redirect('/')
 
-    return render_template('addjob.html', form=form, title="Adding a job")
+    return render_template('job.html', form=form, title="Adding a job")
+
+
+@app.route('/jobs/<int:id>', methods=['GET', 'POST'])
+@flask_login.login_required
+def edit_jobs(id):
+    form = AddJobForm()
+    if request.method == "GET":
+        db_sess = db_sessions.create_session()
+        jobs = db_sess.query(Jobs).filter(Jobs.id == id).first()
+        if jobs and (
+                jobs.team_leader == flask_login.current_user.id or flask_login.current_user.id == 1):
+            form.job.data = jobs.job
+            form.team_leader_id.data = jobs.team_leader
+            form.work_size.data = jobs.work_size
+            form.is_finished.data = jobs.is_finished
+            form.collaborators.data = jobs.collaborators
+        else:
+            abort(404)
+    if form.validate_on_submit():
+        db_sess = db_sessions.create_session()
+        jobs = db_sess.query(Jobs).filter(Jobs.id == id).first()
+        if jobs:
+            jobs.job = form.job.data
+            jobs.team_leader_id = form.team_leader_id.data
+            jobs.work_size = form.work_size.data
+            jobs.is_finished = form.is_finished.data
+            jobs.collaborators = form.collaborators.data
+            db_sess.commit()
+            return redirect('/')
+        else:
+            abort(404)
+
+    return render_template('job.html',
+                           title='Editing a job',
+                           form=form
+                           )
 
 
 @app.route('/')
