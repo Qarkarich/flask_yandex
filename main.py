@@ -139,6 +139,19 @@ def edit_jobs(id):
                            )
 
 
+@app.route('/jobs_delete/<int:id>')
+def delete_job(id):
+    db_sess = db_sessions.create_session()
+    jobs = db_sess.query(Jobs).filter(Jobs.id == id).first()
+    if jobs and (
+            jobs.team_leader == flask_login.current_user.id or flask_login.current_user.id == 1):
+        db_sess.delete(jobs)
+        db_sess.commit()
+    else:
+        abort(404)
+    return redirect('/')
+
+
 @app.route('/')
 def show_jobs_table():
     db_sess = db_sessions.create_session()
