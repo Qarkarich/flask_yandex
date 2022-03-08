@@ -28,10 +28,15 @@ body {
 .menu-items li {
     display: inline-block;
     margin-left: 2vw;
+
+table {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.catchphrase {
-    margin: 15px;
+h2 {
+    text-align: center;
 }
 
 .content-wrapper, .header-items {

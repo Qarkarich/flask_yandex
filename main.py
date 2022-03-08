@@ -93,10 +93,17 @@ def add_job():
 
     return render_template('addjob.html', form=form, title="Adding a job")
 
-
 @app.route('/')
-def main():
-    return render_template("base.html")
+def show_jobs_table():
+    db_sess = db_sessions.create_session()
+    data = db_sess.query(Jobs).all()
+
+    for job in data:
+        user = db_sess.query(User).filter(User.id == job.team_leader).first()
+        job.team_leader = f"{user.surname} {user.name}"
+
+    return render_template('job_table.html',
+                           jobs=data)
 
 
 def main():
