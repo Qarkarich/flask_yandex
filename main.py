@@ -1,8 +1,12 @@
+import datetime
+
 import flask_login
 from flask import Flask, render_template, redirect
 from data import db_sessions
 from data.users import User
+from data.jobs import Jobs
 from forms.user import RegisterForm, LoginForm
+from forms.job import AddJobForm
 from flask_login import login_user, LoginManager
 
 app = Flask(__name__)
@@ -58,6 +62,36 @@ def login():
                                message="Неправильный логин или пароль",
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
+
+
+@app.route('/addjob', methods=['GET', 'POST'])
+def add_job():
+    form = AddJobForm()
+    if form.validate_on_submit():
+        db_sess = db_sessions.create_session()
+        if db_sess.query(Jobs).filter(Jobs.job == form.job.data).first():
+            return render_template("addjob.html", message="Job already exists", form=form,
+                                   title="Adding a job")
+
+        job_endtime = datetime.datetime.now()
+        if not form.is_finished.data:
+            job_endtime += datetime.timedelta(hours=form.work_size.data)
+
+        job = Jobs(
+            id=db_sess.query(Jobs).order_by(Jobs.id.desc()).first().id + 1,
+            team_leader=form.team_leader_id.data,
+            job=form.job.data,
+            work_size=form.work_size.data,
+            collaborators=form.collaborators.data,
+            is_finished=form.is_finished.data,
+            end_date=job_endtime
+        )
+
+        db_sess.add(job)
+        db_sess.commit()
+        return redirect('/')
+
+    return render_template('addjob.html', form=form, title="Adding a job")
 
 
 @app.route('/')
