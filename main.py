@@ -70,6 +70,7 @@ def logout():
     return redirect("/")
 
 
+@flask_login.login_required
 @app.route('/addjob', methods=['GET', 'POST'])
 def add_job():
     form = AddJobForm()
@@ -88,7 +89,7 @@ def add_job():
 
         job = Jobs(
             id=job_id,
-            team_leader=form.team_leader_id.data,
+            team_leader_id=form.team_leader_id.data,
             job=form.job.data,
             work_size=form.work_size.data,
             collaborators=form.collaborators.data,
@@ -111,9 +112,9 @@ def edit_jobs(id):
         db_sess = db_sessions.create_session()
         jobs = db_sess.query(Jobs).filter(Jobs.id == id).first()
         if jobs and (
-                jobs.team_leader == flask_login.current_user.id or flask_login.current_user.id == 1):
+                jobs.team_leader_id == flask_login.current_user.id or flask_login.current_user.id == 1):
             form.job.data = jobs.job
-            form.team_leader_id.data = jobs.team_leader
+            form.team_leader_id.data = jobs.team_leader_id
             form.work_size.data = jobs.work_size
             form.is_finished.data = jobs.is_finished
             form.collaborators.data = jobs.collaborators
@@ -139,12 +140,13 @@ def edit_jobs(id):
                            )
 
 
+@flask_login.login_required
 @app.route('/jobs_delete/<int:id>')
 def delete_job(id):
     db_sess = db_sessions.create_session()
     jobs = db_sess.query(Jobs).filter(Jobs.id == id).first()
     if jobs and (
-            jobs.team_leader == flask_login.current_user.id or flask_login.current_user.id == 1):
+            jobs.team_leader_id == flask_login.current_user.id or flask_login.current_user.id == 1):
         db_sess.delete(jobs)
         db_sess.commit()
     else:
@@ -156,13 +158,6 @@ def delete_job(id):
 def show_jobs_table():
     db_sess = db_sessions.create_session()
     data = db_sess.query(Jobs).all()
-
-    for job in data:
-        user = db_sess.query(User).filter(User.id == job.team_leader).first()
-        if user:
-            job.team_leader = f"{user.surname} {user.name}"
-        else:
-            job.team_leader = "Unknown"
 
     return render_template('job_table.html',
                            jobs=data)

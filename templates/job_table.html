@@ -4,6 +4,11 @@
 <h2 class="center-heading">Works Log</h2>
 {% for job in jobs %}
 <div class="job-container">
+    {% if current_user.is_authenticated %}
+        <a href="/addjob" class="btn btn-secondary">
+            Add job
+        </a>
+    {% endif %}
     <h3>Action #{{ loop.index }}</h3>
     <table class="table">
         <thead>
@@ -18,13 +23,23 @@
         <tbody>
         <tr class="table-primary">
             <td>{{ job.job }}</td>
-            <td>{{ job.team_leader }}</td>
+            <td>{{ job.team_leader.name }} {{ job.team_leader.surname }}</td>
             <td>{{ job.work_size }} hours</td>
             <td>{{ job.collaborators }}</td>
             <td>{{ job.is_finished }}</td>
         </tr>
         </tbody>
     </table>
+    {% if current_user.is_authenticated and current_user.id == job.team_leader.id %}
+    <div>
+        <a href="/jobs/{{ job.id }}" class="btn btn-warning">
+            Edit
+        </a>
+        <a href="/jobs_delete/{{ job.id }}" class="btn btn-danger">
+            Delete
+        </a>
+    </div>
+    {% endif %}
 </div>
 {% endfor %}
 {% endblock %}
